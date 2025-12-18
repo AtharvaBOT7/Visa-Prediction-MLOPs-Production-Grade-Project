@@ -1,6 +1,6 @@
 import sys
 
-from Visa_Prediction.exception import USvisaException
+from Visa_Prediction.exception import visaException
 from Visa_Prediction.logger import logging
 
 import os
@@ -32,4 +32,4 @@ class MongoDBClient:
             self.database_name = database_name
             logging.info("MongoDB connection succesfull")
         except Exception as e:
-            raise USvisaException(e,sys)
+            raise visaException(e,sys)
