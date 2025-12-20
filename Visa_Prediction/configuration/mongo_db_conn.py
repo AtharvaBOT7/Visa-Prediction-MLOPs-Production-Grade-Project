@@ -8,6 +8,9 @@ from Visa_Prediction.constants import DB_NAME, MONGO_CONNECTION_URL
 import pymongo
 import certifi
 
+from dotenv import load_dotenv
+load_dotenv()
+
 ca = certifi.where()
 
 class MongoDBClient:
@@ -23,7 +26,7 @@ class MongoDBClient:
     def __init__(self, database_name=DB_NAME) -> None:
         try:
             if MongoDBClient.client is None:
-                mongo_db_url = os.getenv(MONGO_CONNECTION_URL)
+                mongo_db_url = os.getenv("MONGO_CONNECTION_URL")
                 if mongo_db_url is None:
                     raise Exception(f"Environment key: {MONGO_CONNECTION_URL} is not set.")
                 MongoDBClient.client = pymongo.MongoClient(mongo_db_url, tlsCAFile=ca)
