@@ -1,4 +1,4 @@
-from Visa_Prediction.configuration.mongo_db_conn import MongoDBConnection
+from Visa_Prediction.configuration.mongo_db_conn import MongoDBClient
 from Visa_Prediction.constants import DB_NAME
 from Visa_Prediction.exception import visaException
 import pandas as pd
@@ -13,7 +13,7 @@ class VisaData:
     """
     def __init__(self):
         try:
-            self.mongo_client = MongoDBConnection(database_name=DB_NAME)
+            self.mongo_client = MongoDBClient(database_name=DB_NAME)
         except Exception as e:
             raise visaException(e, sys)
         
