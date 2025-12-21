@@ -7,7 +7,7 @@ from pandas import DataFrame
 from evidently.model_profile import Profile
 from evidently.model_profile.sections import DataDriftProfileSection
 
-from Visa_Prediction.exception import VisaException
+from Visa_Prediction.exception import visaException
 from Visa_Prediction.logger import logging
 from Visa_Prediction.utils.main_utils import read_yaml_file, write_yaml_file
 from Visa_Prediction.entity.artifact_entity import DataValidationArtifact, DataIngestionArtifact
@@ -24,8 +24,14 @@ class DataValidation:
             self.data_validation_config = data_validation_config
             self._schema_config = read_yaml_file(file_path=SCHEMA_FILE_PATH)
         except Exception as e:
-            raise VisaException(e, sys)
-        
+            raise visaException(e, sys)
+
+    @staticmethod
+    def read_data(file_path) -> DataFrame:
+        try:
+            return pd.read_csv(file_path)
+        except Exception as e:
+            raise visaException(e, sys)    
     
     def validate_number_of_columns(self, dataframe: DataFrame) -> bool:
         """
@@ -37,7 +43,7 @@ class DataValidation:
             logging.info(f"Are all the required columns present? {status}")
             return status
         except Exception as e:
-            raise VisaException(e, sys)
+            raise visaException(e, sys)
         
     def do_columns_exist(self, df: DataFrame) -> bool:
         """
@@ -63,7 +69,7 @@ class DataValidation:
 
             return False if len(missing_categorical_columns) > 0 or len(missing_numerical_columns) > 0 else True
         except Exception as e:
-            raise VisaException(e, sys) from e
+            raise visaException(e, sys) from e
         
     def detect_dataset_drift(self, reference_df: DataFrame, current_df: DataFrame) -> bool:
         """ 
@@ -87,7 +93,7 @@ class DataValidation:
             return drift_status
         
         except Exception as e:
-            raise VisaException(e, sys) from e
+            raise visaException(e, sys) from e
         
 
     def initiate_data_validation(self) -> DataValidationArtifact:
@@ -142,9 +148,4 @@ class DataValidation:
             logging.info(f"Data validation artifact: {data_validation_artifact}")
             return data_validation_artifact
         except Exception as e:
-            raise VisaException(e, sys) from e
-
-
-
-
-
+            raise visaException(e, sys) from e
