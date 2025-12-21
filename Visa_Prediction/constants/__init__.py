@@ -1,7 +1,7 @@
 import os 
 from datetime import datetime
 from dotenv import load_dotenv
-import date
+from datetime import date
 
 load_dotenv()
 
