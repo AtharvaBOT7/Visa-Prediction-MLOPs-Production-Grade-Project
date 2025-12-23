@@ -2,16 +2,18 @@ import sys
 from Visa_Prediction.exception import visaException
 from Visa_Prediction.logger import logging
 
-from Visa_Prediction.entity.config_entity import DataIngestionConfig, DataValidaitonConfig
-from Visa_Prediction.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
+from Visa_Prediction.entity.config_entity import DataIngestionConfig, DataValidaitonConfig, DataTransformationConfig
+from Visa_Prediction.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact
 
 from Visa_Prediction.components.data_ingestion import DataIngestion
 from Visa_Prediction.components.data_validation import DataValidation
+from Visa_Prediction.components.data_transformation import DataTransformation
 
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidaitonConfig()
+        self.data_transformation_config = DataTransformationConfig()
 
     def start_data_ingestion(self) -> DataIngestionArtifact:
         """
@@ -42,6 +44,22 @@ class TrainPipeline:
 
             logging.info("Data Validaiton step completed")
             return data_validation_artifact
+        except Exception as e:
+            raise visaException(e, sys) from e
+        
+    def start_data_transformation(self, data_ingestion_artifact: DataIngestionArtifact, data_validation_artifact: DataValidationArtifact) -> DataTransformationArtifact:
+        """ 
+        This function starts the data transformation step of the training pipeline
+        """
+        try:
+            data_transformation = DataTransformation(
+                data_ingestion_artifact=data_ingestion_artifact,
+                data_transformation_config = self.data_transformation_config,
+                data_validation_artifact = data_validation_artifact
+            )
+        
+            data_transformation_artifact = data_transformation.initiate_data_transformation()
+            return data_transformation_artifact
         except Exception as e:
             raise visaException(e, sys) from e
         
