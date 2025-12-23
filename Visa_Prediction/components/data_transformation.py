@@ -21,14 +21,14 @@ class DataTransformation:
     def __init__(self, 
                  data_ingestion_artifact: DataIngestionArtifact,
                  data_transformation_config: DataTransformationConfig,
-                 data_transformation_artifact: DataTransformationArtifact):
+                 data_validaiton_artifact: DataValidationArtifact):
         """
         This class will initialise the Data Ingestion artifact, Data Validaiton artifact and Data Transformation artifact.
         """
         try:
             self.data_ingestion_artifact = data_ingestion_artifact
             self.data_transformation_config = data_transformation_config 
-            self.data_transformation_artifact = data_transformation_artifact
+            self.data_validaiton_artifact = data_validaiton_artifact
             self._schema_config = read_yaml_file(file_path=SCHEMA_FILE_PATH)
 
         except Exception as e:
