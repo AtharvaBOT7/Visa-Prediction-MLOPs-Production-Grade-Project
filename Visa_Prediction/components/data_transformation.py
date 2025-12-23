@@ -21,14 +21,14 @@ class DataTransformation:
     def __init__(self, 
                  data_ingestion_artifact: DataIngestionArtifact,
                  data_transformation_config: DataTransformationConfig,
-                 data_validaiton_artifact: DataValidationArtifact):
+                 data_validation_artifact: DataValidationArtifact):
         """
-        This class will initialise the Data Ingestion artifact, Data Validaiton artifact and Data Transformation artifact.
+        This class will initialise the Data Ingestion artifact, Data Validation artifact and Data Transformation artifact.
         """
         try:
             self.data_ingestion_artifact = data_ingestion_artifact
             self.data_transformation_config = data_transformation_config 
-            self.data_validaiton_artifact = data_validaiton_artifact
+            self.data_validation_artifact = data_validation_artifact
             self._schema_config = read_yaml_file(file_path=SCHEMA_FILE_PATH)
 
         except Exception as e:
@@ -94,13 +94,18 @@ class DataTransformation:
 
                 logging.info("Got the preprocessed object, input features and target feature from the training dataframe")
 
-                input_feature_train_df['company_age'] = CURRENT_YEAR - input_feature_train_df['company_year_of_establishment']
+                input_feature_train_df['company_age'] = CURRENT_YEAR - input_feature_train_df['yr_of_estab']
                 
                 drop_cols = self._schema_config['drop_columns']
 
                 input_feature_train_df = drop_columns(df = input_feature_train_df, cols = drop_cols)
 
                 target_feature_train_df = target_feature_train_df.replace(TargetValueMapping()._asdict())
+
+                input_feature_test_df = test_df.drop(columns=[TARGET_COLUMN], axis=1)
+                target_feature_test_df = test_df[TARGET_COLUMN]
+
+                input_feature_test_df['company_age'] = CURRENT_YEAR - input_feature_test_df['yr_of_estab']
 
                 input_feature_test_df = drop_columns(df = input_feature_test_df, cols = drop_cols)
 
