@@ -2,7 +2,7 @@ import sys
 from Visa_Prediction.exception import visaException
 from Visa_Prediction.logger import logging
 
-from Visa_Prediction.entity.config_entity import DataIngestionConfig, DataValidaitonConfig, DataTransformationConfig
+from Visa_Prediction.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
 from Visa_Prediction.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact
 
 from Visa_Prediction.components.data_ingestion import DataIngestion
@@ -12,7 +12,7 @@ from Visa_Prediction.components.data_transformation import DataTransformation
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
-        self.data_validation_config = DataValidaitonConfig()
+        self.data_validation_config = DataValidationConfig()
         self.data_transformation_config = DataTransformationConfig()
 
     def start_data_ingestion(self) -> DataIngestionArtifact:

@@ -11,11 +11,11 @@ from Visa_Prediction.exception import visaException
 from Visa_Prediction.logger import logging
 from Visa_Prediction.utils.main_utils import read_yaml_file, write_yaml_file
 from Visa_Prediction.entity.artifact_entity import DataValidationArtifact, DataIngestionArtifact
-from Visa_Prediction.entity.config_entity import DataIngestionConfig, DataValidaitonConfig
+from Visa_Prediction.entity.config_entity import DataIngestionConfig, DataValidationConfig
 from Visa_Prediction.constants import SCHEMA_FILE_PATH
 
 class DataValidation:
-    def __init__(self, data_ingestion_artifact: DataIngestionArtifact, data_validation_config: DataValidaitonConfig):
+    def __init__(self, data_ingestion_artifact: DataIngestionArtifact, data_validation_config: DataValidationConfig):
         """
         This function checks if the output from the Data Ingestion component is in the correct format or not and if it is then we will proceed further else we will raise an exception.
         """
