@@ -9,7 +9,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from neuro_mf import ModelFactory
 
-from Visa_Prediction.exception import VisaException
+from Visa_Prediction.exception import visaException
 from Visa_Prediction.logger import logging
 from Visa_Prediction.utils.main_utils import *
 from Visa_Prediction.entity.config_entity import ModelTrainerConfig
@@ -57,7 +57,7 @@ class ModelTrainer:
                 return best_model_detail, metric_artifact
                                    
             except Exception as e:
-                raise VisaException(e, sys) from e
+                raise visaException(e, sys) from e
     
     def initiate_model_trainer(self, ) -> ModelTrainerArtifact:
         """
@@ -91,4 +91,4 @@ class ModelTrainer:
             return model_trainer_artifact
         
         except Exception as e:
-            raise VisaException(e, sys) from e
+            raise visaException(e, sys) from e
