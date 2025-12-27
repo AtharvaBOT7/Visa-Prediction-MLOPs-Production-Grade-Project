@@ -24,6 +24,10 @@ CURRENT_YEAR = date.today().year
 PREPROCESSING_OBJECT_FILE_NAME = "preprocessing.pkl"
 SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
 
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+REGION_NAME = os.getenv("REGION_NAME")
+
 """ 
 These are the Data Ingestion related constant vairables and we save all these in this file because if we 
 later want to change the values we can easily change it from here and it will reflect in the entire project 
@@ -57,3 +61,10 @@ MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
 MODEL_TRAINER_TRAINED_MODEL_FILE_NAME: str = "model.pkl"
 MODEL_TRAINER_EXPECTED_SCORE: float = 0.6
 MODEL_TRAINER_MODEL_CONFIG_FILE_PATH: str = os.path.join("config", "model.yaml")
+
+""" 
+These are the Model Evaluation related constants.
+"""
+MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
+MODEL_BUCKET_NAME = os.getenv("MODEL_BUCKET_NAME")
+MODEL_PUSHER_S3_KEY = "model-registry"
