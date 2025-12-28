@@ -1,7 +1,8 @@
 import boto3
 import os
 from Visa_Prediction.constants import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, REGION_NAME
-
+from dotenv import load_dotenv
+load_dotenv()
 
 class S3Client:
 
