@@ -2,14 +2,15 @@ import sys
 from Visa_Prediction.exception import visaException
 from Visa_Prediction.logger import logging
 
-from Visa_Prediction.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig
-from Visa_Prediction.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact
+from Visa_Prediction.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig, ModelPusherConfig
+from Visa_Prediction.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact, ModelPusherArtifact
 
 from Visa_Prediction.components.data_ingestion import DataIngestion
 from Visa_Prediction.components.data_validation import DataValidation
 from Visa_Prediction.components.data_transformation import DataTransformation
 from Visa_Prediction.components.model_trainer import ModelTrainer
 from Visa_Prediction.components.model_evaluation import ModelEvaluation
+from Visa_Prediction.components.model_pusher import ModelPusher
 
 class TrainPipeline:
     def __init__(self):
@@ -18,6 +19,7 @@ class TrainPipeline:
         self.data_transformation_config = DataTransformationConfig()
         self.model_trainer_config = ModelTrainerConfig()
         self.model_evaluation_config = ModelEvaluationConfig()
+        self.model_pusher_config = ModelPusherConfig()
 
     def start_data_ingestion(self) -> DataIngestionArtifact:
         """
@@ -97,6 +99,21 @@ class TrainPipeline:
         except Exception as e:
             raise visaException(e, sys) from e
         
+    def start_model_pusher(self, model_evaluation_config: ModelEvaluationArtifact) -> ModelPusherArtifact:
+        """
+        This function starts the model pusher step of the training pipeline
+        """
+        try:
+            model_pusher = ModelPusher(
+                model_evaluation_artifact = model_evaluation_config,
+                model_pusher_config = self.model_pusher_config
+            )
+
+            model_pusher_artifact = model_pusher.initiate_model_pusher()
+            return model_pusher_artifact
+        except Exception as e:
+            raise visaException(e, sys) from e
+        
     def run_pipeline(self):
         """
         Runs the entire training pipeline
@@ -107,6 +124,11 @@ class TrainPipeline:
             data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact = data_ingestion_artifact, data_validation_artifact = data_validation_artifact)
             model_trainer_artifact = self.start_model_trainer(data_transformation_artifact = data_transformation_artifact)
             model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact = data_ingestion_artifact, model_trainer_artifact = model_trainer_artifact)
+
+            if not model_evaluation_artifact.is_model_accepted:
+                logging.info("Trained model is not better than the best model present in S3. Hence, we are not pushing the model to S3")
+                return None
+            model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact = model_evaluation_artifact)
             
         except Exception as e:
             raise visaException(e, sys)
