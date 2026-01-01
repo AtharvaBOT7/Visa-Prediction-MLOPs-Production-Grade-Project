@@ -12,6 +12,9 @@ from Visa_Prediction.components.model_trainer import ModelTrainer
 from Visa_Prediction.components.model_evaluation import ModelEvaluation
 from Visa_Prediction.components.model_pusher import ModelPusher
 
+from dotenv import load_dotenv
+load_dotenv()
+
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()

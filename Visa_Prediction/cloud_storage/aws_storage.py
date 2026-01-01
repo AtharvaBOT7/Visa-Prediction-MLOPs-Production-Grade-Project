@@ -9,6 +9,9 @@ from mypy_boto3_s3.service_resource import Bucket
 from botocore.exceptions import BotoCoreError, ClientError
 import pickle
 
+from dotenv import load_dotenv
+load_dotenv()
+
 class SimpleStorageService:
     def __init__(self):
         s3_client = S3Client()

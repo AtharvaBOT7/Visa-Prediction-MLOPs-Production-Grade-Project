@@ -4,6 +4,9 @@ from Visa_Prediction.entity.estimator import VisaModel
 import sys
 from pandas import DataFrame
 
+from dotenv import load_dotenv
+load_dotenv()
+
 
 class visaEstimator:
     """

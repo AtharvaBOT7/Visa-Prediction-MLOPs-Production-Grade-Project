@@ -13,6 +13,9 @@ import pandas as pd
 from typing import Optional
 from dataclasses import dataclass
 
+from dotenv import load_dotenv
+load_dotenv()
+
 @dataclass
 class EvaluateModelResponse:
     trained_model_f1_score: float
@@ -40,10 +43,10 @@ class ModelEvaluation:
         try:
             bucket_name = self.model_eval_config.bucket_name
             model_path=self.model_eval_config.s3_model_key_path
-            visa_estimator = visaEstimator(bucket_name=bucket_name,
-                                               model_path=model_path)
+            visa_estimator = visaEstimator(bucket_name = bucket_name,
+                                               model_path = model_path)
 
-            if visa_estimator.is_model_present(model_path=model_path):
+            if visa_estimator.is_model_present(model_path = model_path):
                 return visa_estimator
             return None
         except Exception as e:
