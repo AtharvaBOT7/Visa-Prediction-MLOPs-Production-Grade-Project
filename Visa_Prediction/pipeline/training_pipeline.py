@@ -102,13 +102,13 @@ class TrainPipeline:
         except Exception as e:
             raise visaException(e, sys) from e
         
-    def start_model_pusher(self, model_evaluation_config: ModelEvaluationArtifact) -> ModelPusherArtifact:
+    def start_model_pusher(self, model_evaluation_artifact: ModelEvaluationArtifact) -> ModelPusherArtifact:
         """
         This function starts the model pusher step of the training pipeline
         """
         try:
             model_pusher = ModelPusher(
-                model_evaluation_artifact = model_evaluation_config,
+                model_evaluation_artifact = model_evaluation_artifact,
                 model_pusher_config = self.model_pusher_config
             )
 
