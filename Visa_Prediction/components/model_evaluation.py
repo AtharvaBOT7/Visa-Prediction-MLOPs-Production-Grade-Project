@@ -40,11 +40,11 @@ class ModelEvaluation:
         try:
             bucket_name = self.model_eval_config.bucket_name
             model_path=self.model_eval_config.s3_model_key_path
-            usvisa_estimator = visaEstimator(bucket_name=bucket_name,
+            visa_estimator = visaEstimator(bucket_name=bucket_name,
                                                model_path=model_path)
 
-            if usvisa_estimator.is_model_present(model_path=model_path):
-                return usvisa_estimator
+            if visa_estimator.is_model_present(model_path=model_path):
+                return visa_estimator
             return None
         except Exception as e:
             raise  visaException(e,sys)
