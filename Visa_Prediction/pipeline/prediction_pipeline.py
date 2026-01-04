@@ -50,7 +50,7 @@ class visaData:
         """
         try:
             
-            usvisa_input_dict = self.get_usvisa_data_as_dict()
+            usvisa_input_dict = self.get_visa_data_as_dict()
             return DataFrame(usvisa_input_dict)
         
         except Exception as e:
@@ -61,7 +61,7 @@ class visaData:
         """
         This function returns a dictionary from visaData class input 
         """
-        logging.info("Entered get_usvisa_data_as_dict method as visaData class")
+        logging.info("Entered get_visa_data_as_dict method as visaData class")
 
         try:
             input_data = {
@@ -79,7 +79,7 @@ class visaData:
 
             logging.info("Created usvisa data dict")
 
-            logging.info("Exited get_usvisa_data_as_dict method as visaData class")
+            logging.info("Exited get_visa_data_as_dict method as visaData class")
 
             return input_data
 
