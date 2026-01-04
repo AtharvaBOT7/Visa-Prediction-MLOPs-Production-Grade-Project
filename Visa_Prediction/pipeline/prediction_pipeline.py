@@ -44,7 +44,7 @@ class visaData:
         except Exception as e:
             raise visaException(e, sys) from e
 
-    def get_usvisa_input_data_frame(self)-> DataFrame:
+    def get_visa_input_data_frame(self)-> DataFrame:
         """
         This function returns a DataFrame from visaData class input
         """
@@ -57,7 +57,7 @@ class visaData:
             raise visaException(e, sys) from e
 
 
-    def get_usvisa_data_as_dict(self):
+    def get_visa_data_as_dict(self):
         """
         This function returns a dictionary from visaData class input 
         """
@@ -86,7 +86,7 @@ class visaData:
         except Exception as e:
             raise visaException(e, sys) from e
 
-class USvisaClassifier:
+class visaClassifier:
     def __init__(self,prediction_pipeline_config: VisaPredictionConfig = VisaPredictionConfig(),) -> None:
         """
         :param prediction_pipeline_config: Configuration for prediction the value
