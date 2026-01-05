@@ -1,5 +1,5 @@
 annotated-doc==0.0.4
-anyio==4.6.2
+anyio==4.12.0
 appdirs==1.4.4
 appnope==0.1.4
 asttokens==3.0.1
@@ -121,7 +121,7 @@ urllib3==2.6.2
 uuid6==2025.0.1
 uvicorn==0.38.0
 uvloop==0.22.1
--e .
+-e git+https://github.com/AtharvaBOT7/Visa-Prediction-MLOPs-Production-Grade-Project.git@58bea5cbb9fe0e976b8c2e584310eca238174b63#egg=Visa_Prediction
 watchdog==6.0.0
 watchfiles==1.1.1
 wcwidth==0.2.14
