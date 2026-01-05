@@ -213,3 +213,6 @@ catboost_info/
 artifact
 LATEST___LLMOPS-Project-User_accessKeys.csv
 visa-key-pair.pem
+*.egg-info/
+dist/
+build/

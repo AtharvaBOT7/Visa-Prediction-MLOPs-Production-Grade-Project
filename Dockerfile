@@ -2,18 +2,18 @@ FROM python:3.9-slim-buster
 
 WORKDIR /app
 
-# Install git
-RUN apt-get update && \
-    apt-get install -y git && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Copy CICD requirements
+COPY CICD_requirements.txt .
 
-COPY requirements.txt .
+# Install dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r CICD_requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
-
+# Copy application code
 COPY . /app
 
+# Expose port
 EXPOSE 8080
 
+# Run application
 CMD ["python3", "app.py"]
